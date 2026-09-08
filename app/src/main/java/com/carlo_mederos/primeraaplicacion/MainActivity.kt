@@ -14,6 +14,10 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -58,6 +62,9 @@ fun ProfileScreen(modifier: Modifier = Modifier) {
 
 @Composable
 fun ProfileCard() {
+    var likes by remember { mutableIntStateOf(0) }
+    var seguidores by remember { mutableIntStateOf(0) }
+
     Card(
         modifier = Modifier
             .fillMaxWidth()
@@ -157,18 +164,24 @@ fun ProfileCard() {
                     horizontalArrangement = Arrangement.spacedBy(12.dp)
                 ) {
                     Button(
-                        onClick = { /* Sin Acción */ },
+                        onClick = { likes++ },
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp),
                         shape = RoundedCornerShape(12.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF2575FC))
+                        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFFFF4757))
                     ) {
-                        Text("Conectar", fontWeight = FontWeight.Bold)
+                        Icon(
+                            imageVector = Icons.Default.Favorite,
+                            contentDescription = null,
+                            modifier = Modifier.size(20.dp)
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Like", fontWeight = FontWeight.Bold)
                     }
 
                     OutlinedButton(
-                        onClick = { /* Sin Acción */ },
+                        onClick = { seguidores++ },
                         modifier = Modifier
                             .weight(1f)
                             .height(48.dp),
@@ -176,11 +189,22 @@ fun ProfileCard() {
                         border = BorderStroke(1.5.dp, Color(0xFF2575FC)),
                         colors = ButtonDefaults.outlinedButtonColors(contentColor = Color(0xFF2575FC))
                     ) {
-                        Text("Mensaje", fontWeight = FontWeight.Bold)
+                        Text("Seguidores", fontWeight = FontWeight.Bold)
                     }
                 }
                 
-                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = "$likes likes",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color(0xFF4A5568)
+                )
+                Text(
+                    text = "$seguidores seguidores",
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.Medium,
+                    color = Color(0xFF4A5568)
+                )
             }
         }
     }
